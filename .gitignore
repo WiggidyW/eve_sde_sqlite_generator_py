@@ -1,0 +1,5 @@
+__pycache__
+sde
+.env
+debug_out
+*.ps1

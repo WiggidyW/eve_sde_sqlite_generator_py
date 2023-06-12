@@ -1,0 +1,1 @@
+from .item_configurator_sqlite_accessor import GENERATOR as ItemConfiguratorSqliteAccessor
