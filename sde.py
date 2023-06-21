@@ -22,7 +22,6 @@ class SolarSystemStaticData:
         f = open(self.paths[self.index])
         yml = yaml.load(f, Loader)
         f.close()
-        self.index += 1
 
         # constellation_id_path = self.paths[self.index].parent.parent / 'constellation.staticdata'
         # if constellation_id_path not in self.constellation_ids:
@@ -39,6 +38,8 @@ class SolarSystemStaticData:
             f.close()
             self.region_ids[region_id_path] = region_yml['regionID']
         yml['regionID'] = self.region_ids[region_id_path]
+
+        self.index += 1
 
         return yml
 
