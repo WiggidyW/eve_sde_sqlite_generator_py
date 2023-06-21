@@ -1,3 +1,4 @@
+# TODO: Language is not needed
 def initialize(cursor, _):
     cursor.execute("""
         CREATE TABLE types (
