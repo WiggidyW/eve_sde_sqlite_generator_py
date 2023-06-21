@@ -1,4 +1,3 @@
-from pathlib import Path
 import yaml
 try:
     from yaml import CLoader as Loader
@@ -7,7 +6,7 @@ except ImportError:
 
 class SolarSystemStaticData:
     def __init__(self, dir):
-        self.paths = list((dir / 'sde' / 'fsd' / 'universe')\
+        self.paths = list((dir / 'fsd' / 'universe')\
             .rglob("solarsystem.staticdata"))
         self.index = 0
         self.region_ids = {}
@@ -57,7 +56,7 @@ class SDE:
 
     def solar_systems(self):
         if self._solar_systems is None:
-            self._solar_systems = SolarSystemStaticData()
+            self._solar_systems = SolarSystemStaticData(self.dir)
         return self._solar_systems
     
     def type_ids(self):
