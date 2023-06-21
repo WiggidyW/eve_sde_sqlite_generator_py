@@ -11,8 +11,12 @@ def import_generator_groups(
 ) -> 'list[dict[str, str | list[dict[str, str | function]]]]':
     generator_groups = []
     for name in names:
-        if name == 'item-configurator-sqlite-accessor':
-            generator_groups.append(generators.ItemConfiguratorSqliteAccessor)
+        if name == 'eve-item-configurator-sqlite-accessor-rs':
+            generator_groups.append(generators.EveItemConfiguratorSqliteAccessorRs)
+        elif name == 'eve-item-parser-server-go':
+            generator_groups.append(generators.EveItemParserServerGo)
+        elif name == 'eve-buyback-server-rs':
+            generator_groups.append(generators.EveBuybackServerRs)
         else:
             raise Exception(f'Unknown generator group: {name}')
     return generator_groups

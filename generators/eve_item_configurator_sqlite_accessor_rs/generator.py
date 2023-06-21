@@ -79,15 +79,6 @@ def insert(cursor, sde):
         category_indexes,
     )
 
-GENERATOR: 'dict[str, str | list[dict[str, str | function]]]' = {
-    'ref': 'ITEM_CONFIGURATOR_SQLITE_ACCESSOR',
-    'generators': [{
-        'destination': 'db.sqlite',
-        'initialize': initialize,
-        'insert': insert,
-    }],
-}
-
 def add_languages(languages, sde_data, name_key='name'):
     for row in sde_data.values():
         names = row.get(name_key, {})
@@ -189,3 +180,12 @@ def insert_types(
             ),
         )
         i += 1
+
+GENERATOR: 'dict[str, str | list[dict[str, str | function]]]' = {
+    'ref': 'EVE_ITEM_CONFIGURATOR_SQLITE_ACCESSOR_RS',
+    'generators': [{
+        'destination': 'db.sqlite',
+        'initialize': initialize,
+        'insert': insert,
+    }],
+}
