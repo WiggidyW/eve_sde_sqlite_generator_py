@@ -17,6 +17,8 @@ def import_generator_groups(
             generator_groups.append(generators.EveItemParserServerGo)
         elif name == 'eve-buyback-server-rs':
             generator_groups.append(generators.EveBuybackServerRs)
+        elif name == 'weve-esi-go':
+            generator_groups.append(generators.WeveEsiGo)
         else:
             raise Exception(f'Unknown generator group: {name}')
     return generator_groups

@@ -10,6 +10,8 @@ class SolarSystemStaticData:
         self.paths = list((dir / 'sde' / 'fsd' / 'universe')\
             .rglob("solarsystem.staticdata"))
         self.index = 0
+        self.region_ids = {}
+        self.constellation_ids = {}
 
     def __iter__(self):
         self.index = 0
@@ -22,6 +24,23 @@ class SolarSystemStaticData:
         yml = yaml.load(f, Loader)
         f.close()
         self.index += 1
+
+        # constellation_id_path = self.paths[self.index].parent.parent / 'constellation.staticdata'
+        # if constellation_id_path not in self.constellation_ids:
+        #     f = open(constellation_id_path)
+        #     constellation_yml = yaml.load(f, Loader)
+        #     f.close()
+        #     self.constellation_ids[constellation_id_path] = constellation_yml['constellationID']
+        # yml['constellationID'] = self.constellation_ids[constellation_id_path]
+
+        region_id_path = self.paths[self.index].parent.parent.parent / 'region.staticdata'
+        if region_id_path not in self.region_ids:
+            f = open(region_id_path)
+            region_yml = yaml.load(f, Loader)
+            f.close()
+            self.region_ids[region_id_path] = region_yml['regionID']
+        yml['regionID'] = self.region_ids[region_id_path]
+
         return yml
 
 class SDE:
