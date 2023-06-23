@@ -25,64 +25,44 @@ def generate_group(
                 generator['insert'],
                 debug=True,
             )
-        return
     
-    git_url = env.get_or_panic(generator_group['ref'])
-    repo_name = git_url.split('/')[-1]
-    if repo_name.endswith('.git'):
-        repo_name = repo_name[:-4]
-    repo_path = dir / repo_name
-    # clone the repo to dir
-    subprocess.run(
-        [
-            'git',
-            'clone',
-            git_url,
-        ],
-        cwd=dir,
-    )
-
-    # generate the database and move it to the repo
-    for generator in generator_group['generators']:
-        destination = f'{repo_path}/{generator["destination"]}'
-        generate(
-            dir,
-            sde,
-            destination,
-            generator['initialize'],
-            generator['insert'],
-        )
-        # add the database to git
+    else:
+        git_url = env.get_or_panic(generator_group['ref'])
+        repo_name = git_url.split('/')[-1]
+        if repo_name.endswith('.git'):
+            repo_name = repo_name[:-4]
+        repo_path = dir / repo_name
+        # clone the repo to dir
         subprocess.run(
-            [
-                'git',
-                'add',
+            ['git', 'clone', git_url],
+            cwd=dir,
+        )
+
+        # generate the database and move it to the repo
+        for generator in generator_group['generators']:
+            destination = f'{repo_path}/{generator["destination"]}'
+            generate(
+                dir,
+                sde,
                 destination,
-            ],
-            cwd=repo_path,
-            check=True,
-        )
-        # commit the changes
-        subprocess.run(
-            [
-                'git',
-                'commit',
-                '-m',
-                f'Update {generator["destination"]}',
-            ],
-            cwd=repo_path,
-            check=True,
-        )
+                generator['initialize'],
+                generator['insert'],
+            )
+            # add the database to git
+            subprocess.run(
+                ['git', 'add', destination],
+                cwd=repo_path,
+                check=True,
+            )
+            # commit the changes
+            subprocess.run(
+                ['git', 'commit', '-m', f'Update {generator["destination"]}'],
+                cwd=repo_path,
+                check=True,
+            )
 
-    # push the commits
-    subprocess.run(
-        [
-            'git',
-            'push',
-        ],
-        cwd=repo_path,
-        check=True,
-    )
+        # push the commits
+        subprocess.run(['git', 'push'], cwd=repo_path, check=True)
 
 
 def generate(
