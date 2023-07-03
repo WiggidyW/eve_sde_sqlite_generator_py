@@ -54,6 +54,7 @@ class SDE:
         self._market_groups = None
         self._blueprints = None
         self._type_dogma = None
+        self._stations = None
 
     def solar_systems(self):
         if self._solar_systems is None:
@@ -127,3 +128,13 @@ class SDE:
             ) as f:
                 self._type_dogma = yaml.load(f, Loader)
         return self._type_dogma
+    
+    def stations(self):
+        if self._stations is None:
+            with open(
+                self.dir / 'bsd' / 'staStations.yaml',
+                'r',
+                encoding='utf8',
+            ) as f:
+                self._stations = yaml.load(f, Loader)
+        return self._stations

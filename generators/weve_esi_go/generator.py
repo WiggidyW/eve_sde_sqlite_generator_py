@@ -6,17 +6,29 @@ def initialize(cursor, _):
         )
     """)
 
+# def insert(cursor, sde):
+#     systems = sde.solar_systems()
+#     for system in systems:
+#         cursor.execute("""
+#             INSERT INTO systems (
+#                 system_id,
+#                 region_id
+#             ) VALUES (?, ?)
+#             """,
+#             (system['solarSystemID'], system['regionID']),
+#        )
+
 def insert(cursor, sde):
-    systems = sde.solar_systems()
-    for system in systems:
+    stations = sde.stations()
+    for station in stations:
         cursor.execute("""
             INSERT INTO systems (
                 system_id,
                 region_id
             ) VALUES (?, ?)
             """,
-            (system['solarSystemID'], system['regionID']),
-       )
+            (station['stationID'], station['regionID']),
+         )
 
 GENERATOR: 'dict[str, str | list[dict[str, str | function]]]' = {
     'ref': 'WEVE_ESI_GO',
